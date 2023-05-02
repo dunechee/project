@@ -1,6 +1,9 @@
 import random
 import decimal
-from datetime import datetime
+import csv
+from django.core.files.base import ContentFile
+from django.core.files.uploadedfile import SimpleUploadedFile
+from io import BytesIO
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.management.base import BaseCommand, CommandError
@@ -60,20 +63,49 @@ class Command(BaseCommand):
             )
             categories.append(category)
 
-        # create some products
-        products = []
-        for i in range(5):
-            product_name = fake.catch_phrase()
-            product_slug = slugify(product_name)  # generate slug from category name
-            if Product.objects.filter(slug=product_slug).exists():  # check if slug already exists, regenerate if needed
+        # # create some products
+        # products = []
+        # for i in range(5):
+        #     product_name = fake.catch_phrase()
+        #     image_data = fake.binary(length=1024)  # Generate fake image data
+        #     image_file = ContentFile(image_data)    # Create a ContentFile from the image data
+        #     image_name = fake.file_name(extension='jpg')
+        #     uploaded_file = SimpleUploadedFile(
+        #         name=image_name, 
+        #         content=image_file.read(),
+        #         content_type='image/jpeg'
+        #     )
+        #     product_slug = slugify(product_name)  # generate slug from category name
+        #     if Product.objects.filter(slug=product_slug).exists():  # check if slug already exists, regenerate if needed
+        #         product_slug = slugify(product_name)
+        #     product = Product.objects.create(
+        #         name=product_name,
+        #         slug=product_slug,  # set the generated slug for the category
+        #         price=int(decimal.Decimal(random.randrange(155, 899)) / 100),
+        #         category=random.choice(categories), # attach a random category to the product
+        #         image=uploaded_file
+        #     )
+        #     products.append(product)
+
+        # Read data from CSV file
+        csv_file_path = 'data/exoplanets.csv'  # Update this with the path to your CSV file
+        with open(csv_file_path, newline='', encoding="utf8") as file:
+            reader = csv.reader(file, delimiter=",")
+            next(reader)
+            for row in reader:
+                # Extract data from CSV row
+                product_name = row[0]
                 product_slug = slugify(product_name)
-            product = Product.objects.create(
-                name=product_name,
-                slug=product_slug,  # set the generated slug for the category
-                price=int(decimal.Decimal(random.randrange(155, 899)) / 100),
-                category=random.choice(categories) # attach a random category to the product
-            )
-            products.append(product)
+                if Product.objects.filter(slug=product_slug).exists():
+                    product_slug = slugify(product_name)
+
+                # Create Product instance
+                products = Product.objects.create(
+                    name=product_name,
+                    slug=product_slug,
+                    price=int(decimal.Decimal(random.randrange(155, 899)) / 100),
+                    category=random.choice(categories)
+                )
 
         # create some carts
         products = list(Product.objects.all())
@@ -115,5 +147,5 @@ class Command(BaseCommand):
             price=example_product.price * random.randrange(1, 4)
         )
         example_order_item.save()
-
+        
         print("Data loaded successfully")

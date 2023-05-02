@@ -29,7 +29,7 @@ SECRET_KEY = os.getenv("DjANGO_SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["brushnatural-alarmxray.codio-box.uk"]
+ALLOWED_HOSTS = ["brushnatural-alarmxray-8000.codio-box.uk"]
 
 
 # Application definition
@@ -90,8 +90,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'shopdb',
         'USER': 'nedu',
+        'HOST': 'localhost',
         'PASSWORD': 'chinedu101',
-        'PORT': '5434',
+        'PORT': '5432',
     }
 }
 
