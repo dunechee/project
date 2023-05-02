@@ -86,13 +86,21 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': 'shopdb',
+    #     'USER': 'nedu',
+    #     'HOST': 'localhost',
+    #     'PASSWORD': 'chinedu101',
+    #     'PORT': '5432',
+
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'shopdb',
+        'NAME': 'shopdb_huuv',
         'USER': 'nedu',
-        'HOST': 'localhost',
-        'PASSWORD': 'chinedu101',
-        'PORT': '5432',
+        'HOST': 'dpg-ch8p27r3cv233v65c12g-a',
+        'PASSWORD': 'say9oSWRZoN5Bpj1jyW1lIUI5STUzZeZ',
+        'PORT': '5432',    
     }
 }
 
