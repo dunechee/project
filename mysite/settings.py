@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+import dj_database_url
 
 load_dotenv()
 
@@ -29,7 +30,7 @@ SECRET_KEY = os.getenv("DjANGO_SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["brushnatural-alarmxray-8000.codio-box.uk", "exoshop.onrender.com"]
+ALLOWED_HOSTS = ["brushnatural-alarmxray-8000.codio-box.uk", "exoshop.onrender.com", "127.0.0.1"]
 
 
 # Application definition
@@ -94,15 +95,18 @@ DATABASES = {
     #     'PASSWORD': 'chinedu101',
     #     'PORT': '5432',
 
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'shopdb_huuv',
-        'USER': 'nedu',
-        'HOST': 'dpg-ch8p27r3cv233v65c12g-a',
-        'PASSWORD': 'say9oSWRZoN5Bpj1jyW1lIUI5STUzZeZ',
-        'PORT': '5432',    
-    }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': 'shopdb_huuv',
+    #     'USER': 'nedu',
+    #     'HOST': 'dpg-ch8p27r3cv233v65c12g-a',
+    #     'PASSWORD': 'say9oSWRZoN5Bpj1jyW1lIUI5STUzZeZ',
+    #     'PORT': '5432',
+    # }
+
+    "default": dj_database_url.parse(os.environ.get("DATABASE_URL"))
 }
+
 
 
 # Password validation
