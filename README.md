@@ -38,7 +38,7 @@ python3 manage.py migrate
 ```
 
 ### POPULATING THE DATABASE
-The app uses Faker to generate random customers and orders and the products are parsed from the .csv file in '/data/exoplanets.csv' using the parameters specified in '/management/commands/parse_csv.py'. You populate the data using the command:
+The app uses Faker to generate random customers and orders and the products are parsed from the .csv file in '/data/exoplanets.csv' using the parameters specified in '/management/commands/parse_csv.py'. The dataset was reduced due to cloud database limitations and very long time to build application. You populate the data using the command:
 ```
 python3 manage.py parse_csv
 ```
