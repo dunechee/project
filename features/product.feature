@@ -1,6 +1,6 @@
-    Feature: checkout products
+    Feature: search products
 
     Scenario: checkout a product
-        Given we submit a product
-        When we fill in the form
+        Given we search a product
+        When we enter the query
         Then it succeeds
