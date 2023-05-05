@@ -95,15 +95,6 @@ DATABASES = {
     #     'PASSWORD': 'chinedu101',
     #     'PORT': '5432',
 
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.postgresql',
-    #     'NAME': 'shopdb_huuv',
-    #     'USER': 'nedu',
-    #     'HOST': 'dpg-ch8p27r3cv233v65c12g-a',
-    #     'PASSWORD': 'say9oSWRZoN5Bpj1jyW1lIUI5STUzZeZ',
-    #     'PORT': '5432',
-    # }
-
     "default": dj_database_url.parse(os.environ.get("DATABASE_URL"))
 }
 
@@ -161,7 +152,6 @@ LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/'
 LOGOUT_URL = '/'
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # AUTHENTICATION_BACKENDS = [
 # 'django.contrib.auth.backends.ModelBackend',

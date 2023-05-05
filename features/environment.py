@@ -10,7 +10,7 @@ from django.test.testcases import LiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
-os.environ["DJANGO_SETTINGS_MODULE"] = "shop.settings"
+os.environ["DJANGO_SETTINGS_MODULE"] = "mysite.settings"
 django.setup()
 
 # Use the chrome driver specific to your version of Chrome browser and put it in ./driver directory

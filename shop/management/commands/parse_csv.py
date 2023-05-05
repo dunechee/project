@@ -24,7 +24,7 @@ class Command(BaseCommand):
         OrderItem.objects.all().delete()
         Order.objects.all().delete()
         Category.objects.all().delete()
-        Product.objects.all().delete()
+        #Product.objects.all().delete()
         Customer.objects.all().delete()
         User.objects.all().delete()
         print("tables dropped successfully")
@@ -49,64 +49,64 @@ class Command(BaseCommand):
             customer.address = fake.address(),
             customer.address = str(customer.address[0])
             customer.save()
+        print("Customers table created successfully")
 
         # create some categories
+        category_list = ['Rocky planets', 'super-earths', 'ice giants', 'gas giants', 'mini-Neptunes']
         categories = []
+
         for i in range(5):
-            category_name = fake.word()
+            category_name = random.choice(category_list)  # select a random category name from the list
             category_slug = slugify(category_name)  # generate slug from category name
-            if Category.objects.filter(slug=category_slug).exists():  # check if slug already exists, regenerate if needed
+            while Category.objects.filter(slug=category_slug).exists():  # check if slug already exists, regenerate if needed
+                category_name = random.choice(category_list)
                 category_slug = slugify(category_name)
             category = Category.objects.create(
                 name=category_name,
                 slug=category_slug  # set the generated slug for the category
             )
             categories.append(category)
+        print("Categories table created successfully")
 
-        # # create some products
-        # products = []
-        # for i in range(5):
-        #     product_name = fake.catch_phrase()
-        #     image_data = fake.binary(length=1024)  # Generate fake image data
-        #     image_file = ContentFile(image_data)    # Create a ContentFile from the image data
-        #     image_name = fake.file_name(extension='jpg')
-        #     uploaded_file = SimpleUploadedFile(
-        #         name=image_name, 
-        #         content=image_file.read(),
-        #         content_type='image/jpeg'
-        #     )
-        #     product_slug = slugify(product_name)  # generate slug from category name
-        #     if Product.objects.filter(slug=product_slug).exists():  # check if slug already exists, regenerate if needed
-        #         product_slug = slugify(product_name)
-        #     product = Product.objects.create(
-        #         name=product_name,
-        #         slug=product_slug,  # set the generated slug for the category
-        #         price=int(decimal.Decimal(random.randrange(155, 899)) / 100),
-        #         category=random.choice(categories), # attach a random category to the product
-        #         image=uploaded_file
-        #     )
-        #     products.append(product)
+	 products = []
+        for i in range(5):
+            product_name = fake.catch_phrase()
+            image_path = 'shop/static/img/AppBreweryWallpaper 7.jpg'  # replace with the path to your image file
+            with open(image_path, 'rb') as f:
+                image_data = f.read()
+            image_file = ContentFile(image_data)
+            product_slug = slugify(product_name)
+            if Product.objects.filter(slug=product_slug).exists():
+                product_slug = slugify(product_name)
+            product = Product.objects.create(
+                name=product_name,
+                slug=product_slug,
+                price=int(decimal.Decimal(random.randrange(155, 899)) / 100),
+                category=random.choice(categories),
+                image=image_file
+            )
+            products.append(product)
 
         # Read data from CSV file
-        csv_file_path = 'data/exoplanets.csv'  # Update this with the path to your CSV file
-        with open(csv_file_path, newline='', encoding="utf8") as file:
-            reader = csv.reader(file, delimiter=",")
-            next(reader)
-            for row in reader:
-                # Extract data from CSV row
-                product_name = row[0]
-                product_slug = slugify(product_name)
-                if Product.objects.filter(slug=product_slug).exists():
-                    product_slug = slugify(product_name)
+       #  csv_file_path = 'data/exoplanets.csv'  # Update this with the path to your CSV file
+       #  with open(csv_file_path, newline='', encoding="utf8") as file:
+       #      reader = csv.reader(file, delimiter=",")
+       #      next(reader)
+       #      for row in reader:
+       #          # Extract data from CSV row
+       #          product_name = row[0]
+       #          product_slug = slugify(product_name)
+       #          if Product.objects.filter(slug=product_slug).exists():
+       #              product_slug = slugify(product_name)
 
-                # Create Product instance
-                products = Product.objects.create(
-                    name=product_name,
-                    slug=product_slug,
-                    price=int(decimal.Decimal(random.randrange(155, 899)) / 100),
-                    category=random.choice(categories)
-                )
-
+       #          # Create Product instance
+       #          products = Product.objects.create(
+       #              name=product_name,
+       #              slug=product_slug,
+       #              price=int(decimal.Decimal(random.randrange(155, 899)) / 100),
+       #              category=random.choice(categories)
+       #          )
+       #  print("products table created successfully")
         # create some carts
         products = list(Product.objects.all())
         for i in range(10):
